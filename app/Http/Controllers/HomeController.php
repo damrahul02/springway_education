@@ -10,6 +10,8 @@ use App\Models\PageContent;
 use App\Models\ServiceItem;
 use App\Models\DestinationItem;
 use App\Models\ProcessStep;
+use App\Models\Consultation;
+use App\Models\ActivityLog;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -177,30 +179,64 @@ class HomeController extends Controller
     public function submitConsultation(Request $request)
     {
         $validated = $request->validate([
-            'name'        => ['required', 'string', 'max:255'],
-            'email'       => ['required', 'email', 'max:255'],
-            'phone'       => ['required', 'string', 'max:50'],
-            'destination' => ['nullable', 'string', 'max:100'],
-            'message'     => ['nullable', 'string', 'max:3000'],
+            'name'            => ['required', 'string', 'max:255'],
+            'email'           => ['required', 'email', 'max:255'],
+            'phone'           => ['required', 'string', 'max:50'],
+            'destination'     => ['nullable', 'string', 'max:100'],
+            'education_level' => ['nullable', 'string', 'max:255'],
+            'english_test'    => ['nullable', 'string', 'max:100'],
+            'message'         => ['nullable', 'string', 'max:3000'],
+            'source'          => ['nullable', 'string', 'max:100'],
         ]);
 
-        Inquiry::create([
-            'name'        => $validated['name'],
-            'email'       => $validated['email'],
-            'phone'       => $validated['phone'],
-            'destination' => $validated['destination'] ?? 'Not Specified',
-            'message'     => $validated['message'] ?? null,
-            'status'      => 'new',
+        $source = $validated['source'] ?? ($request->is('*contact*') ? 'Contact Page' : 'Home Page');
+
+        // 1. Create dedicated Consultation record
+        $consultation = Consultation::create([
+            'name'            => $validated['name'],
+            'email'           => $validated['email'],
+            'phone'           => $validated['phone'],
+            'destination'     => $validated['destination'] ?? 'Not Specified',
+            'education_level' => $validated['education_level'] ?? null,
+            'english_test'    => $validated['english_test'] ?? null,
+            'message'         => $validated['message'] ?? null,
+            'source'          => $source,
+            'is_seen'         => false,
+            'status'          => 'new',
+            'ip_address'      => $request->ip(),
         ]);
 
+        // 2. Mirror into StudentFile for CRM lead workflows
         StudentFile::create([
-            'name'        => $validated['name'],
-            'email'       => $validated['email'],
-            'phone'       => $validated['phone'],
-            'destination' => $validated['destination'] ?? 'Not Specified',
-            'message'     => $validated['message'] ?? null,
-            'status'      => 'new',
+            'name'            => $validated['name'],
+            'email'           => $validated['email'],
+            'phone'           => $validated['phone'],
+            'destination'     => $validated['destination'] ?? 'Not Specified',
+            'education_level' => $validated['education_level'] ?? null,
+            'english_test'    => $validated['english_test'] ?? null,
+            'message'         => $validated['message'] ?? null,
+            'status'          => 'new',
+            'internal_notes'  => "Inquiry submitted via {$source}",
         ]);
+
+        // 3. Mirror into Inquiry table for backward compatibility
+        Inquiry::create([
+            'name'           => $validated['name'],
+            'email'          => $validated['email'],
+            'phone'          => $validated['phone'],
+            'destination'    => $validated['destination'] ?? 'Not Specified',
+            'message'        => $validated['message'] ?? null,
+            'status'         => 'new',
+            'internal_notes' => "Inquiry submitted via {$source}",
+        ]);
+
+        // 4. Audit Log
+        ActivityLog::record(
+            'Consultation Inquiries',
+            'created',
+            "New free consultation request from '{$consultation->name}' ({$consultation->destination}) via {$source}",
+            ['consultation_id' => $consultation->id, 'email' => $consultation->email, 'phone' => $consultation->phone]
+        );
 
         return back()->with('consultation_success', 'Thank you, ' . $validated['name'] . '! Your consultation request has been received. Our senior counselor will contact you within 24 hours.');
     }

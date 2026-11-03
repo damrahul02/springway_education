@@ -40,7 +40,7 @@ class PermissionController extends Controller
             'designation'   => 'nullable|string|max:120',
             'password'      => 'required|string|min:6',
             'permissions'   => 'nullable|array',
-            'permissions.*' => 'string|in:student_files,pages,news,gallery',
+            'permissions.*' => 'string|in:student_files,consultations,pages,news,gallery',
             'status'        => 'nullable|in:active,inactive',
         ]);
 
@@ -80,7 +80,7 @@ class PermissionController extends Controller
             'designation'   => 'nullable|string|max:120',
             'password'      => 'nullable|string|min:6',
             'permissions'   => 'nullable|array',
-            'permissions.*' => 'string|in:student_files,pages,news,gallery',
+            'permissions.*' => 'string|in:student_files,consultations,pages,news,gallery',
             'status'        => 'nullable|in:active,inactive',
         ]);
 

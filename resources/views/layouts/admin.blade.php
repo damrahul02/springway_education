@@ -111,16 +111,34 @@
         <!-- Navigation Links -->
         <div class="flex-1 overflow-y-auto px-4 py-5 custom-scrollbar space-y-6">
             
-            <!-- Group: Main (Student Files) -->
-            @if(Auth::user()->canAccess('student_files'))
+            <!-- Group: Main Navigation -->
+            @if(Auth::user()->canAccess('student_files') || Auth::user()->canAccess('consultations'))
             <div>
                 <p class="px-3 text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2">Main Navigation</p>
                 <div class="space-y-1">
+                    @if(Auth::user()->canAccess('student_files'))
                     <a href="{{ route('admin.dashboard') }}"
                        class="flex items-center gap-3.5 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition {{ request()->routeIs('admin.dashboard') ? 'bg-gradient-to-r from-brand-blue to-brand-sky text-white shadow-lg shadow-blue-600/30 font-bold' : 'text-slate-300 hover:bg-white/10 hover:text-white' }}">
                         <i class="fa-solid fa-chart-pie w-5 text-center text-base {{ request()->routeIs('admin.dashboard') ? 'text-white' : 'text-sky-400' }}"></i>
                         <span>Dashboard & Student Files</span>
                     </a>
+                    @endif
+
+                    @if(Auth::user()->canAccess('consultations'))
+                    @php $sidebarUnseenCount = \App\Models\Consultation::unseen()->count(); @endphp
+                    <a href="{{ route('admin.consultations.index') }}"
+                       class="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold transition {{ request()->routeIs('admin.consultations.*') ? 'bg-gradient-to-r from-brand-blue to-brand-sky text-white shadow-lg shadow-blue-600/30 font-bold' : 'text-slate-300 hover:bg-white/10 hover:text-white' }}">
+                        <div class="flex items-center gap-3.5">
+                            <i class="fa-solid fa-envelope-open-text w-5 text-center text-base {{ request()->routeIs('admin.consultations.*') ? 'text-white' : 'text-teal-400' }}"></i>
+                            <span>Consultation Inquiries</span>
+                        </div>
+                        @if($sidebarUnseenCount > 0)
+                        <span class="text-xs font-bold px-2 py-0.5 rounded-md {{ request()->routeIs('admin.consultations.*') ? 'bg-white/20 text-white' : 'bg-rose-500 text-white' }}">
+                            {{ $sidebarUnseenCount }}
+                        </span>
+                        @endif
+                    </a>
+                    @endif
                 </div>
             </div>
             @endif

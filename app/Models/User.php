@@ -71,7 +71,16 @@ class User extends Authenticatable
         }
 
         $perms = $this->permissions ?? [];
-        return in_array($permission, $perms, true);
+        if (in_array($permission, $perms, true)) {
+            return true;
+        }
+
+        // Student files counselors also get access to consultation inquiries
+        if ($permission === 'consultations' && in_array('student_files', $perms, true)) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -95,6 +104,10 @@ class User extends Authenticatable
             return 'admin.gallery.index';
         }
 
+        if ($this->canAccess('consultations')) {
+            return 'admin.consultations.index';
+        }
+
         return 'home';
     }
 
@@ -109,6 +122,12 @@ class User extends Authenticatable
                 'description' => 'View total lead metrics, search student files, update admission status, and manage inquiry records',
                 'icon'        => 'fa-chart-pie',
                 'color'       => 'blue',
+            ],
+            'consultations' => [
+                'name'        => 'Consultation Inquiries',
+                'description' => 'Review website consultation submissions, mark messages as seen/unseen, and contact students directly via Gmail and WhatsApp',
+                'icon'        => 'fa-envelope-open-text',
+                'color'       => 'teal',
             ],
             'pages' => [
                 'name'        => 'Page Content CMS',

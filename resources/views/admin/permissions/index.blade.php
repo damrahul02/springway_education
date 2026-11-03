@@ -215,6 +215,13 @@
                                     </span>
                                     @endif
 
+                                    @if(in_array('consultations', $userPerms))
+                                    <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-teal-50 text-teal-700 border border-teal-200">
+                                        <i class="fa-solid fa-envelope-open-text text-[10px]"></i>
+                                        Consultation Inquiries
+                                    </span>
+                                    @endif
+
                                     @if(in_array('pages', $userPerms))
                                     <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-50 text-amber-700 border border-amber-200">
                                         <i class="fa-solid fa-file-lines text-[10px]"></i>
@@ -552,7 +559,7 @@
 
         // Set permission checkboxes
         const perms = Array.isArray(user.permissions) ? user.permissions : [];
-        const allModules = ['student_files', 'pages', 'news', 'gallery'];
+        const allModules = ['student_files', 'consultations', 'pages', 'news', 'gallery'];
 
         allModules.forEach(function(mod) {
             const cb = document.getElementById('edit_perm_' + mod);

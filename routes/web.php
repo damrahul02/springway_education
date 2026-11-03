@@ -13,6 +13,7 @@ use App\Http\Controllers\ProcessController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ActivityLogController;
+use App\Http\Controllers\ConsultationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,7 +64,17 @@ Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function () 
         Route::delete('/student-files/{id}', [DashboardController::class, 'deleteStudentFile'])->name('student_files.destroy');
     });
 
-    // 2. News Management (Permission: news)
+    // 2. Consultation Inquiries & Messages (Permission: consultations)
+    Route::middleware(['permission:consultations'])->group(function () {
+        Route::get('/consultations', [ConsultationController::class, 'index'])->name('consultations.index');
+        Route::get('/consultations/{id}/quick-view', [ConsultationController::class, 'quickView'])->name('consultations.quick_view');
+        Route::post('/consultations/{id}/toggle-seen', [ConsultationController::class, 'toggleSeen'])->name('consultations.toggle_seen');
+        Route::post('/consultations/mark-all-seen', [ConsultationController::class, 'markAllSeen'])->name('consultations.mark_all_seen');
+        Route::post('/consultations/{id}/status', [ConsultationController::class, 'updateStatus'])->name('consultations.update_status');
+        Route::delete('/consultations/{id}', [ConsultationController::class, 'destroy'])->name('consultations.destroy');
+    });
+
+    // 3. News Management (Permission: news)
     Route::middleware(['permission:news'])->group(function () {
         Route::get('/news', [NewsController::class, 'index'])->name('news.index');
         Route::get('/news/create', [NewsController::class, 'create'])->name('news.create');
