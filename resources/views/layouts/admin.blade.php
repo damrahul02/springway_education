@@ -229,6 +229,10 @@
                         <span>Destinations</span>
                         <i class="fa-solid fa-arrow-up-right-from-square text-[9px] opacity-60"></i>
                     </a>
+                    <a href="{{ route('study_in_bangladesh') }}" target="_blank" class="px-2.5 py-1.5 rounded-lg text-xs bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 hover:text-white transition flex items-center justify-between">
+                        <span>Study in BD</span>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-[9px] opacity-60"></i>
+                    </a>
                     <a href="{{ route('process') }}" target="_blank" class="px-2.5 py-1.5 rounded-lg text-xs bg-white/5 hover:bg-white/15 text-slate-300 hover:text-white transition flex items-center justify-between">
                         <span>Our Process</span>
                         <i class="fa-solid fa-arrow-up-right-from-square text-[9px] opacity-60"></i>

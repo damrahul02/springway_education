@@ -122,11 +122,11 @@
         .nav-links {
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 2px;
         }
         .nav-links a {
-            padding: 8px 14px;
-            font-size: .88rem;
+            padding: 7px 11px;
+            font-size: .84rem;
             font-weight: 600;
             color: var(--navy);
             border-radius: var(--radius-sm);
@@ -399,11 +399,11 @@
         .scroll-top:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
 
         /* ===== MOBILE RESPONSIVE NAVIGATION ===== */
-        @media (max-width: 1024px) {
-            .nav-links a { padding: 8px 10px; font-size: .82rem; }
-            .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+        @media (max-width: 1200px) {
+            .nav-links a { padding: 6px 8px; font-size: .8rem; }
+            .nav-cta { padding: 8px 14px !important; font-size: .8rem !important; }
         }
-        @media (max-width: 900px) {
+        @media (max-width: 992px) {
             .hamburger { display: flex; }
             .nav-links {
                 position: absolute;
@@ -520,6 +520,7 @@
             <li><a href="{{ route('about') }}" class="{{ request()->routeIs('about') ? 'active' : '' }}">About Us</a></li>
             <li><a href="{{ route('services') }}" class="{{ request()->routeIs('services') ? 'active' : '' }}">Services</a></li>
             <li><a href="{{ route('destinations') }}" class="{{ request()->routeIs('destinations') ? 'active' : '' }}">Destinations</a></li>
+            <li><a href="{{ route('study_in_bangladesh') }}" class="{{ request()->routeIs('study_in_bangladesh') ? 'active' : '' }}">Study in Bangladesh</a></li>
             <li><a href="{{ route('process') }}" class="{{ request()->routeIs('process') ? 'active' : '' }}">Process</a></li>
             <li><a href="{{ route('gallery') }}" class="{{ request()->routeIs('gallery') ? 'active' : '' }}">Gallery</a></li>
             <li><a href="{{ route('news') }}" class="{{ request()->routeIs('news*') ? 'active' : '' }}">News</a></li>
@@ -565,6 +566,7 @@
                     <li><a href="{{ route('about') }}"><i class="fas fa-chevron-right"></i> About Us</a></li>
                     <li><a href="{{ route('services') }}"><i class="fas fa-chevron-right"></i> Our Services</a></li>
                     <li><a href="{{ route('destinations') }}"><i class="fas fa-chevron-right"></i> Destinations</a></li>
+                    <li><a href="{{ route('study_in_bangladesh') }}"><i class="fas fa-chevron-right"></i> Study in Bangladesh (MBBS/BDS)</a></li>
                     <li><a href="{{ route('process') }}"><i class="fas fa-chevron-right"></i> 6-Step Process</a></li>
                     <li><a href="{{ route('gallery') }}"><i class="fas fa-chevron-right"></i> Photo & Video Gallery</a></li>
                     <li><a href="{{ route('news') }}"><i class="fas fa-chevron-right"></i> Latest News & Events</a></li>

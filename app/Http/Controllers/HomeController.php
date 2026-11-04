@@ -174,6 +174,14 @@ class HomeController extends Controller
     }
 
     /**
+     * Study MBBS & BDS in Bangladesh for International Students
+     */
+    public function studyInBangladesh()
+    {
+        return view('pages.study-in-bangladesh');
+    }
+
+    /**
      * Submit consultation inquiry from any page
      */
     public function submitConsultation(Request $request)

@@ -24,6 +24,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/about', [HomeController::class, 'about'])->name('about');
 Route::get('/services', [HomeController::class, 'services'])->name('services');
 Route::get('/destinations', [HomeController::class, 'destinations'])->name('destinations');
+Route::get('/study-in-bangladesh', [HomeController::class, 'studyInBangladesh'])->name('study_in_bangladesh');
 Route::get('/process', [HomeController::class, 'process'])->name('process');
 Route::get('/gallery', [HomeController::class, 'gallery'])->name('gallery');
 Route::get('/news', [HomeController::class, 'news'])->name('news');

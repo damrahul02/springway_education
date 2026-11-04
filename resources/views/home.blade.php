@@ -283,11 +283,11 @@
         .nav-links {
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 2px;
         }
         .nav-links a {
-            padding: 8px 16px;
-            font-size: .88rem;
+            padding: 7px 11px;
+            font-size: .84rem;
             font-weight: 600;
             color: var(--navy);
             border-radius: var(--radius-sm);
@@ -1162,8 +1162,13 @@
             }
         }
 
-        /* Mobile Navigation Dropdown (<= 900px) */
-        @media (max-width: 900px) {
+        @media (max-width: 1200px) {
+            .nav-links a { padding: 6px 8px; font-size: .8rem; }
+            .nav-cta { padding: 8px 14px !important; font-size: .8rem !important; }
+        }
+
+        /* Mobile Navigation Dropdown (<= 992px) */
+        @media (max-width: 992px) {
             .hamburger {
                 display: flex;
             }
@@ -1818,6 +1823,7 @@
             <li><a href="{{ route('about') }}">About Us</a></li>
             <li><a href="{{ route('services') }}">Services</a></li>
             <li><a href="{{ route('destinations') }}">Destinations</a></li>
+            <li><a href="{{ route('study_in_bangladesh') }}">Study in Bangladesh</a></li>
             <li><a href="{{ route('process') }}">Process</a></li>
             <li><a href="{{ route('gallery') }}">Gallery</a></li>
             <li><a href="{{ route('news') }}">News</a></li>
@@ -2618,6 +2624,7 @@
                     <li><a href="{{ route('about') }}"><i class="fas fa-chevron-right"></i> About Us</a></li>
                     <li><a href="{{ route('services') }}"><i class="fas fa-chevron-right"></i> Our Services</a></li>
                     <li><a href="{{ route('destinations') }}"><i class="fas fa-chevron-right"></i> Destinations</a></li>
+                    <li><a href="{{ route('study_in_bangladesh') }}"><i class="fas fa-chevron-right"></i> Study in Bangladesh (MBBS/BDS)</a></li>
                     <li><a href="{{ route('process') }}"><i class="fas fa-chevron-right"></i> Application Process</a></li>
                     <li><a href="{{ route('gallery') }}"><i class="fas fa-chevron-right"></i> Photo & Video Gallery</a></li>
                     <li><a href="{{ route('news') }}"><i class="fas fa-chevron-right"></i> News & Updates</a></li>
